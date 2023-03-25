@@ -86,3 +86,4 @@ if __name__ == "__main__":
 
     print(f"There are {len(usd)} samples in the dataset.")
     signal = usd[0]
+    print(f"Shape of signal: {signal.shape}")
