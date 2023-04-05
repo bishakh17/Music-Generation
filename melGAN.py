@@ -45,15 +45,15 @@ class Discriminator(nn.Module):
 
         self.conv2 = nn.Conv2d(in_channels=4, out_channels=16, kernel_size=(3,2), stride=2, padding=0)
 
-        self.conv3 = nn.Conv2d(in_channels=16, out_channels=64, kernel_size=(3,2), stride=2, padding=0)
+        self.conv3 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=(3,2), stride=2, padding=0)
 
-        self.conv4 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=(3,2), stride=2, padding=0)
+        self.conv4 = nn.Conv2d(in_channels=32, out_channels=64, kernel_size=(3,2), stride=2, padding=0)
 
-        self.conv5 = nn.Conv2d(in_channels=128, out_channels=256, kernel_size=(3,2), stride=2, padding=0)
+        # self.conv5 = nn.Conv2d(in_channels=64, out_channels=128, kernel_size=(3,2), stride=2, padding=0)
 
-        self.fc1 = nn.Linear(in_features=256, out_features=64)
+        self.fc1 = nn.Linear(64*3*2, 64)
 
-        self.fc2 = nn.Linear(in_features=64, out_features=1)
+        self.fc2 = nn.Linear(64, 1)
  
 
     def forward(self, input):
@@ -61,10 +61,13 @@ class Discriminator(nn.Module):
         x = self.activ(self.conv2(x))
         x = self.activ(self.conv3(x))
         x = self.activ(self.conv4(x))
-        x = self.activ(self.conv5(x))
+        # x = self.activ(self.conv5(x))
         x = torch.flatten(x, 1)
-        x = self.activ(self.fc1(x))
-        x = self.sigmoid(self.fc2(x))
+        x = self.activ(x)
+        x = self.fc1(x)
+        x = self.activ(x)
+        x = self.fc2(x)
+        x = self.sigmoid(x)
         return x
 
 
