@@ -10,6 +10,42 @@ MelGAN is capable of generating high-quality speech from mel-spectrograms, which
 
 One of the advantages of MelGAN over other speech synthesis models is that it can generate speech with a high level of fidelity and naturalness, even at lower sampling rates. This makes it useful for applications where low-latency and low-bandwidth speech synthesis is required, such as in voice assistants, chatbots, and other natural language processing systems.
 
+### Math behind MelGAN
+
+### Discrete Fourier Transform
+
+Discrete Fourier Transform (DFT) is a mathematical technique used to analyze the frequency components of a discrete-time signal. It takes a finite sequence of equally spaced samples of a function and decomposes it into a sum of complex sinusoids. The DFT is defined as:
+
+![dft](./images/dft.png "dft")
+
+### Short-Time Fourier Transform (STFT)
+
+Short-Time Fourier Transform (STFT) is a signal processing technique used to analyze the frequency content of a signal over time. It involves dividing the signal into short overlapping time segments, and then applying the Fourier transform to each segment to obtain its frequency content. The resulting frequency content for each segment is then plotted as a function of time to produce a spectrogram.
+
+The STFT provides a way to analyze non-stationary signals, where the frequency content of the signal changes over time. It is widely used in applications such as speech processing, music analysis, and biomedical signal analysis.
+
+One advantage of STFT over the standard Fourier transform is that it provides time-varying frequency information, which is useful for analyzing signals with time-varying frequency content. However, a disadvantage of STFT is that the time and frequency resolution are trade-offs. Increasing the time resolution (i.e., reducing the length of the time segments) reduces the frequency resolution, and vice versa.
+
+![STFT](./images/stft.png "STFT")
+
+In short-time Fourier transform (STFT), the input signal is first divided into short overlapping segments or windows, and then Fourier transform is applied to each window to obtain its frequency spectrum. The length of the window and the degree of overlap between consecutive windows are important parameters that affect the quality of the STFT output.
+
+The window function is a mathematical function that is multiplied with each segment of the signal before applying Fourier transform. The purpose of the window function is to reduce the spectral leakage and smearing that occurs due to the sudden truncation of the signal at the edges of the window. Window functions have a wide range of shapes, such as rectangular, Hamming, Hanning, and Blackman, and the choice of the window function depends on the specific application and the desired trade-off between spectral resolution and sidelobe suppression.
+
+The hop size, or the step size, is the amount of overlap between adjacent windows. Overlapping windows allow for a smoother transition between adjacent segments and result in a more continuous representation of the signal over time. The hop size can be smaller than the window size to achieve higher temporal resolution or larger than the window size to reduce the computational complexity of the STFT. The choice of the hop size also affects the frequency resolution of the STFT output, as well as the ability to track rapid changes in the signal over time.
+
+### Mel-Spectrogram
+
+Mel spectrogram (or Mel-frequency spectrogram) is a type of spectrogram that is commonly used in speech and music analysis. It is a way to represent the power spectral density of a signal in the frequency domain, where the frequency scale is divided into a set of mel-spaced frequency bins.
+
+The mel scale is a perceptual scale of pitches judged by listeners to be equal in distance from one another. Mel-scale frequency spacing is more appropriate for human auditory perception than linear frequency spacing. The mel scale is based on the concept of critical bands, which are the frequency ranges in which the human ear can detect a sound.
+
+In a Mel spectrogram, the magnitude of each frequency bin is weighted according to a set of triangular overlapping windows that are spaced based on the mel scale. The triangular windows are designed to approximate the shape of the critical bands in the human auditory system. The magnitude of each windowed frequency bin is then squared and summed over time to obtain a spectrogram that represents the power spectral density of the signal in the mel-frequency domain.
+
+Mel spectrograms are commonly used in speech and music analysis because they provide a more compact and perceptually relevant representation of the frequency content of a signal than traditional spectrograms. They are also used in machine learning applications, such as speech recognition and music genre classification, because they can be used as input features to machine learning models.
+
+![Mel spectrograms](./images/mel-spec.png "Mel spectrograms")
+
 ## MelGAN Architecture
 
 The model works by taking as input a sequence of Mel-spectrograms, which are a visual representation of the frequency content of an audio signal, typically used in speech and music processing. The MelGAN model is trained to generate realistic audio samples that match the input Mel-spectrogram sequence.
